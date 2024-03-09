@@ -12,13 +12,17 @@ body {
   width: 1.5em;
   height: 1.5em;
   background-color: #777;
-  border: 1px dashed darkgray;
+  border: 1px solid darkgray;
 }
 
 .snake {
-  background-color: #6b6;
+  background-color: rgb(50, 103, 23);
+  width: 1.5em;
+  height: 1.5em;
 }
 
 .fruit {
   background-color: rgb(193, 31, 9);
+  width: 1.5em;
+  height: 1.5em;
 }

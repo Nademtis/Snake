@@ -10,7 +10,7 @@ export default class Controller {
         right: false,
         left: false
     }
-    direction = "left" //hardcoded to left
+    direction = ""
     gridColAmount = 10;
     gridRowAmount = 10;
 
@@ -22,16 +22,21 @@ export default class Controller {
 
     tick() {
 
-        //check if berry
-
         this.handleSnakeMovement();
 
         this.model.updateGrid()
         this.view.showGrid(this.model.getGrid()) //print new model
-        setTimeout(this.tick.bind(this), 300); //make sure the next tick has the same refference to this controller
+        setTimeout(this.tick.bind(this), 250); //make sure the next tick has the same refference to this controller
     }
     handleSnakeMovement() {
         const newHead = this.model.queue.peek().data;
+
+        if (this.model.hitBerry(newHead)) {
+            this.model.generateBerry()
+        } else
+            if (this.direction) { //if not hit berry - remove tail
+                this.model.removeTail()
+            }
 
         switch (this.direction) {
             case "up":
@@ -48,11 +53,10 @@ export default class Controller {
                 break;
         }
 
-        // Remove tail if no fruit
-        this.model.removeTail()
+
     }
     checkCollision() {
-
+        //TODO if newHead hit queue, die
     }
     init() {
         document.addEventListener("keydown", (event) => this.keyPress(event)) // without using arrow function the method would not have the correct refference -->
