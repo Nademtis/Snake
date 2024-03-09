@@ -11,19 +11,33 @@ export default class Controller {
         left: false
     }
     direction = "left" //hardcoded to left
+    gridColAmount = 10;
+    gridRowAmount = 10;
+
 
     constructor() {
         this.model = new Model()
         this.view = new View(this)
     }
+
+    tick() {
+        setTimeout(this.tick, 300); //prep next tick
+
+    }
+
     init() {
-        document.addEventListener("keydown", (event) => this.keyPress(event)) // without using arrow function the method would not have the correct refference
+        document.addEventListener("keydown", (event) => this.keyPress(event)) // without using arrow function the method would not have the correct refference -->
         document.addEventListener("keyup", (event) => this.keyUp(event))      // to this object. so inside keyPress "this.controls" would not work, since it doesnt point at
 
-        console.log("hi from controller");
-        this.view.sayHello()
-        this.model.sayHello()
+        let list = this.model.initList(this.gridRowAmount,this.gridColAmount)
+        this.view.showGrid(list)
 
+
+        //this.tick()
+    }
+
+    initGrid() {
+        this.view.showGrid(this.gridRowAmount,this.gridColAmount)
     }
 
     keyPress(event) {

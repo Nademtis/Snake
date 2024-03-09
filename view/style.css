@@ -4,20 +4,15 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-#grid {
-  display: grid;
-  grid-template-columns: repeat(10, max-content);
-  border-left: 1px dashed darkgray;
-  border-top: 1px dashed darkgray;
-  width: fit-content
+#grid_table {
+  border-collapse: collapse;
 }
 
 .cell {
-  width: 32px;
-  aspect-ratio: 1 / 1;
+  width: 1.5em;
+  height: 1.5em;
   background-color: #777;
-  border-right: 1px dashed darkgray;
-  border-bottom: 1px dashed darkgray;
+  border: 1px dashed darkgray;
 }
 
 .player {
