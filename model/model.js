@@ -58,9 +58,15 @@ export default class Model {
         return false;
     }
     newHead(row, col) {
+        const numRows = this.grid.length;
+        const numCols = this.grid[0].length;
+
+        col = (col + numCols) % numCols;
+        row = (row + numRows) % numRows;
+
         this.queue.enQueue(new SnakeBody(row, col))
     }
-    removeTail(){
+    removeTail() {
         this.queue.deQueue()
     }
 }

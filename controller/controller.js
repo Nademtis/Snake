@@ -25,16 +25,13 @@ export default class Controller {
         //check if berry
 
         this.handleSnakeMovement();
-        //remove whole snake
-        //remove tail snake if no berry
-
 
         this.model.updateGrid()
         this.view.showGrid(this.model.getGrid()) //print new model
         setTimeout(this.tick.bind(this), 300); //make sure the next tick has the same refference to this controller
     }
     handleSnakeMovement() {
-        const newHead = this.model.getQueue().peek().data;
+        const newHead = this.model.queue.peek().data;
 
         switch (this.direction) {
             case "up":
@@ -53,6 +50,9 @@ export default class Controller {
 
         // Remove tail if no fruit
         this.model.removeTail()
+    }
+    checkCollision() {
+
     }
     init() {
         document.addEventListener("keydown", (event) => this.keyPress(event)) // without using arrow function the method would not have the correct refference -->
