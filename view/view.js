@@ -21,8 +21,8 @@ export default class View {
                 const td = document.createElement("td")
                 switch (list[r][c]) {
                     case 0: td.classList.add("cell"); break //cell
-                    case 1: break; //snake
-                    case 2: break; //fruit
+                    case 1: td.classList.add("snake"); break; //snake
+                    case 2: td.classList.add("fruit"); break; //fruit
                 }
                 tr.appendChild(td);
             }

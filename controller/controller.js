@@ -21,23 +21,51 @@ export default class Controller {
     }
 
     tick() {
-        setTimeout(this.tick, 300); //prep next tick
 
+        //check if berry
+
+        this.handleSnakeMovement();
+        //remove whole snake
+        //remove tail snake if no berry
+
+
+        this.model.updateGrid()
+        this.view.showGrid(this.model.getGrid()) //print new model
+        setTimeout(this.tick.bind(this), 300); //make sure the next tick has the same refference to this controller
     }
+    handleSnakeMovement() {
+        const newHead = this.model.getQueue().peek().data;
 
+        switch (this.direction) {
+            case "up":
+                this.model.newHead(newHead.row - 1, newHead.col);
+                break;
+            case "down":
+                this.model.newHead(newHead.row + 1, newHead.col);
+                break;
+            case "left":
+                this.model.newHead(newHead.row, newHead.col - 1);
+                break;
+            case "right":
+                this.model.newHead(newHead.row, newHead.col + 1);
+                break;
+        }
+
+        // Remove tail if no fruit
+        this.model.removeTail()
+    }
     init() {
         document.addEventListener("keydown", (event) => this.keyPress(event)) // without using arrow function the method would not have the correct refference -->
         document.addEventListener("keyup", (event) => this.keyUp(event))      // to this object. so inside keyPress "this.controls" would not work, since it doesnt point at
 
-        let list = this.model.initList(this.gridRowAmount,this.gridColAmount)
-        this.view.showGrid(list)
+        let grid = this.model.initGrid(this.gridRowAmount, this.gridColAmount)
+        this.view.showGrid(grid)
 
-
-        //this.tick()
+        this.tick()
     }
 
     initGrid() {
-        this.view.showGrid(this.gridRowAmount,this.gridColAmount)
+        this.view.showGrid(this.gridRowAmount, this.gridColAmount)
     }
 
     keyPress(event) {

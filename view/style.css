@@ -15,10 +15,10 @@ body {
   border: 1px dashed darkgray;
 }
 
-.player {
+.snake {
   background-color: #6b6;
 }
 
-.goal {
-  background-color: #cc0;
+.fruit {
+  background-color: rgb(193, 31, 9);
 }
