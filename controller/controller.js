@@ -4,6 +4,7 @@ import Model from "../model/model.js"
 import View from "../view/view.js"
 
 export default class Controller {
+    gameIsRunning = true
     controls = {
         up: false,
         down: false,
@@ -11,8 +12,8 @@ export default class Controller {
         left: false
     }
     direction = ""
-    gridColAmount = 10;
-    gridRowAmount = 10;
+    gridColAmount = 30;
+    gridRowAmount = 20;
 
 
     constructor() {
@@ -21,12 +22,20 @@ export default class Controller {
     }
 
     tick() {
-
+        this.isGameRunning()
         this.handleSnakeMovement();
+        this.checkCollision()
 
         this.model.updateGrid()
         this.view.showGrid(this.model.getGrid()) //print new model
-        setTimeout(this.tick.bind(this), 250); //make sure the next tick has the same refference to this controller
+        setTimeout(this.tick.bind(this), 180); //make sure the next tick has the same refference to this controller
+    }
+    isGameRunning(){
+        if (!this.gameIsRunning) {
+            console.log("Game Over!");
+            alert("Game Over! - You ran into yourself :(");
+            location.reload();
+        }
     }
     handleSnakeMovement() {
         const newHead = this.model.queue.peek().data;
@@ -34,7 +43,7 @@ export default class Controller {
         if (this.model.hitBerry(newHead)) {
             this.model.generateBerry()
         } else
-            if (this.direction) { //if not hit berry - remove tail
+            if (this.direction) { //if not hit berry - remove tail - game will only start if direction has a value
                 this.model.removeTail()
             }
 
@@ -52,11 +61,19 @@ export default class Controller {
                 this.model.newHead(newHead.row, newHead.col + 1);
                 break;
         }
-
-
     }
     checkCollision() {
-        //TODO if newHead hit queue, die
+        const newHead = this.model.queue.peek().data;
+
+        let node = this.model.queue.list.head.next; // Start from the second node - skip head
+        while (node) {
+            if (newHead.row == node.data.row && newHead.col == node.data.col) {
+                console.log("Collision detected - Game Over.");
+                this.gameIsRunning = false; // Stop the game
+                break;
+            }
+            node = node.next;
+        }
     }
     init() {
         document.addEventListener("keydown", (event) => this.keyPress(event)) // without using arrow function the method would not have the correct refference -->
@@ -65,6 +82,7 @@ export default class Controller {
         let grid = this.model.initGrid(this.gridRowAmount, this.gridColAmount)
         this.view.showGrid(grid)
 
+        this.gameIsRunning = true
         this.tick()
     }
 

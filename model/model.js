@@ -49,7 +49,6 @@ export default class Model {
             }
         }
         this.generateBerry()
-        console.table(this.grid);
         return this.grid;
     }
 

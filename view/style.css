@@ -2,6 +2,8 @@ body {
   background-color: #666;
   color: #6b6;
   font-family: Arial, Helvetica, sans-serif;
+
+  
 }
 
 #grid_table {
@@ -25,4 +27,8 @@ body {
   background-color: rgb(193, 31, 9);
   width: 1.5em;
   height: 1.5em;
+}
+.container {
+  display: flex;
+  justify-content: center;
 }
